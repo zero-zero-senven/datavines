@@ -37,3 +37,4 @@ package-lock.json
 datavines-server/src/main/resources/static
 
 /plugins/
+/exec/
