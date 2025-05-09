@@ -151,7 +151,7 @@ public class JobExternalService {
         Map<String,String> inputParameter = new HashMap<>();
         Map<String, Object> defaultDataSourceMap = DefaultDataSourceInfoUtils.getDefaultDataSourceConfigMap();
         JobExecutionInfo jobExecutionInfo = new JobExecutionInfo(
-                jobExecution.getId(), jobExecution.getName(),
+                jobExecution.getId(), jobExecution.getJobId(), jobExecution.getName(),
                 jobExecution.getEngineType(), jobExecution.getEngineParameter(),
                 jobExecution.getErrorDataStorageType(), jobExecution.getErrorDataStorageParameter(), jobExecution.getErrorDataFileName(),
                 String.valueOf(defaultDataSourceMap.get(SRC_CONNECTOR_TYPE)), JSONUtils.toJsonString(defaultDataSourceMap),

@@ -569,10 +569,11 @@ public class JobExecuteManager {
         inputParameter.put(POST_SQL, jobExecution.getPostSql());
 
         JobExecutionInfo jobExecutionInfo = new JobExecutionInfo(
-                jobExecution.getId(), jobExecution.getName(),
+                jobExecution.getId(), jobExecution.getJobId(), jobExecution.getName(),
                 jobExecution.getEngineType(), jobExecution.getEngineParameter(),
                 jobExecution.getErrorDataStorageType(), jobExecution.getErrorDataStorageParameter(), jobExecution.getErrorDataFileName(),
-                getDefaultConnectionInfo().getType(), JSONUtils.toJsonString(DefaultDataSourceInfoUtils.getDefaultDataSourceConfigMap()),
+                getDefaultConnectionInfo().getType()
+                , JSONUtils.toJsonString(DefaultDataSourceInfoUtils.getDefaultDataSourceConfigMap()),
                 jobExecutionParameter);
         DataVinesJobConfig qualityConfig =
                 DataVinesConfigurationManager.generateConfiguration(jobExecution.getJobType(), inputParameter, jobExecutionInfo);

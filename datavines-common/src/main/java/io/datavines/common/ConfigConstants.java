@@ -69,6 +69,7 @@ public class ConfigConstants {
     public static final String METRIC_DIMENSION = "metric_dimension";
     public static final String CREATE_TIME = "create_time";
     public static final String UPDATE_TIME = "update_time";
+    public static final String JOB_DEFINITION_ID = "job_definition_id";
     public static final String JOB_EXECUTION_ID = "job_execution_id";
     public static final String ERROR_DATA_DIR = "error_data_dir";
     public static final String ERROR_DATA_FILE_NAME = "error_data_file_name";
@@ -79,6 +80,7 @@ public class ConfigConstants {
     public static final String DATABASE = "database";
     public static final String DATABASE_NAME = "database_name";
     public static final String TABLE_NAME = "table_name";
+    public static final String TABLE_PATH = "table_path";
     public static final String COLUMN_NAME = "column_name";
     public static final String SCHEMA = "schema";
     public static final String SCHEMA2 = "schema2";

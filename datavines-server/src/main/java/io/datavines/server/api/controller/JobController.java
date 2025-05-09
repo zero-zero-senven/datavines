@@ -19,6 +19,7 @@ package io.datavines.server.api.controller;
 import io.datavines.core.aop.RefreshToken;
 import io.datavines.core.constant.DataVinesConstants;
 import io.datavines.core.exception.DataVinesServerException;
+import io.datavines.engine.spark.core.SparkDataVinesBootstrap;
 import io.datavines.server.api.dto.bo.job.JobCreate;
 import io.datavines.server.api.dto.bo.job.JobUpdate;
 import io.datavines.server.repository.entity.Job;
@@ -31,6 +32,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Base64;
 
 @Api(value = "job", tags = "job", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController

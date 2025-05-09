@@ -177,6 +177,9 @@ public abstract class BaseSparkConfigurationBuilder extends BaseJobConfiguration
                                                         metricInputParameter.get(TABLE2) ,"2");
                     connectorParameterMap.put(OUTPUT_TABLE, outputTable);
                     connectorParameterMap.put(DRIVER, connectorFactory.getDialect().getDriver());
+                    connectorParameterMap.put(HDFS_FILE, metricInputParameter.get(HDFS_FILE));
+//                    metricInputParameter.put(TABLE2, QuoteIdentifier.quote(outputTable));
+//                    metricInputParameter.put(TABLE2_ALIAS, QuoteIdentifier.quote(tableAlias2));
                     metricInputParameter.put(TABLE2, outputTable);
                     metricInputParameter.put(TABLE2_ALIAS, tableAlias2);
 

@@ -68,6 +68,12 @@
 
         <dependency>
             <groupId>io.datavines</groupId>
+            <artifactId>datavines-engine-spark-connector-hdfs</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.datavines</groupId>
             <artifactId>datavines-engine-spark-transform-sql</artifactId>
             <version>${project.version}</version>
         </dependency>

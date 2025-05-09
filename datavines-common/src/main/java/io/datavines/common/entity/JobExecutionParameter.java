@@ -33,4 +33,8 @@ public class JobExecutionParameter {
     private ConnectorParameter connectorParameter2;
 
     private List<BaseJobParameter> metricParameterList;
+
+    private String validateResultDataStorageType;
+
+    private Map<String, Object> validateResultDataStorageParameter;
 }

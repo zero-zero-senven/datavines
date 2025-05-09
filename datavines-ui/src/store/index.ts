@@ -11,7 +11,7 @@ export * from './rootReducer';
 
 const store = createStore(
     combineReducers(rootReducer),
-    process.env.NODE_ENV === 'development' ? composeWithDevTools(applyMiddleware(thunk, logger)) : applyMiddleware(thunk),
+    process.env.NODE_ENV === 'development' ? composeWithDevTools(applyMiddleware(thunk)) : applyMiddleware(thunk),
 );
 export const useStore = () => naviveStore<RootReducer>().getState();
 

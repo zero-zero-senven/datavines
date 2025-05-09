@@ -27,6 +27,8 @@ public class JobExecutionInfo {
 
     private Long id;
 
+    private Long jobDefinitionId;
+
     private String name;
 
     private String engineType;

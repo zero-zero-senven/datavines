@@ -28,6 +28,7 @@ public class MetricConstants {
     public static final List<ColumnInfo> PROFILE_COLUMN_LIST = new ArrayList<>();
 
     static {
+        RESULT_COLUMN_LIST.add(new ColumnInfo("job_definition_id",false));
         RESULT_COLUMN_LIST.add(new ColumnInfo("job_execution_id",false));
         RESULT_COLUMN_LIST.add(new ColumnInfo("metric_unique_key",true));
         RESULT_COLUMN_LIST.add(new ColumnInfo("metric_type",false));
@@ -45,6 +46,7 @@ public class MetricConstants {
         RESULT_COLUMN_LIST.add(new ColumnInfo("create_time",false));
         RESULT_COLUMN_LIST.add(new ColumnInfo("update_time",false));
 
+        ACTUAL_COLUMN_LIST.add(new ColumnInfo("job_definition_id",false));
         ACTUAL_COLUMN_LIST.add(new ColumnInfo("job_execution_id",false));
         ACTUAL_COLUMN_LIST.add(new ColumnInfo("metric_name",false));
         ACTUAL_COLUMN_LIST.add(new ColumnInfo("unique_code",false));

@@ -1,0 +1,2 @@
+spark-hdfs-source=io.datavines.engine.spark.hdfs.source.HdfsSource
+livy-hdfs-source=io.datavines.engine.spark.hdfs.source.HdfsSource

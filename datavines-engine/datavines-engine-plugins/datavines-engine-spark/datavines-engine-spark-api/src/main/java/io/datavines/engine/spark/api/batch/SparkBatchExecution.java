@@ -16,17 +16,23 @@
  */
 package io.datavines.engine.spark.api.batch;
 
+import io.datavines.common.ConfigConstants;
 import io.datavines.engine.spark.api.BaseSparkSource;
 import io.datavines.engine.spark.api.BaseSparkTransform;
 import io.datavines.engine.spark.api.SparkRuntimeEnvironment;
+import org.apache.spark.sql.DataFrameWriter;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.datavines.common.config.Config;
 import io.datavines.common.config.ConfigRuntimeException;
 import io.datavines.engine.api.env.Execution;
+import org.apache.spark.sql.SparkSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static io.datavines.engine.api.EngineConstants.*;
 
@@ -34,6 +40,8 @@ import static io.datavines.engine.api.EngineConstants.*;
  * SparkBatchExecution
  */
 public class SparkBatchExecution implements Execution<SparkBatchSource, BaseSparkTransform, SparkBatchSink> {
+
+    private final Logger logger = LoggerFactory.getLogger(SparkBatchExecution.class);
 
     private final SparkRuntimeEnvironment environment;
 
@@ -71,6 +79,7 @@ public class SparkBatchExecution implements Execution<SparkBatchSource, BaseSpar
 
     private void registerInputTempView(BaseSparkSource<Dataset<Row>> source, SparkRuntimeEnvironment environment) {
         Config conf = source.getConfig();
+
         if (conf.has(OUTPUT_TABLE)) {
             String tableName = conf.getString(OUTPUT_TABLE);
             registerTempView(tableName, source.getData(environment));

@@ -151,6 +151,10 @@ public class JobExecutionServiceImpl extends ServiceImpl<JobExecutionMapper, Job
 
         JobExecution jobExecution = new JobExecution();
         BeanUtils.copyProperties(submitJob, jobExecution);
+        //补充数据
+        submitJob.getParameter().setValidateResultDataStorageType(submitJob.getValidateResultDataStorageType());
+        submitJob.getParameter().setValidateResultDataStorageParameter(submitJob.getValidateResultDataStorageParameter());
+
         jobExecution.setParameter(JSONUtils.toJsonString(submitJob.getParameter()));
         if (submitJob.getExecutePlatformParameter() != null) {
             jobExecution.setExecutePlatformParameter(JSONUtils.toJsonString(submitJob.getExecutePlatformParameter()));
@@ -173,7 +177,6 @@ public class JobExecutionServiceImpl extends ServiceImpl<JobExecutionMapper, Job
             submitJob.setEngineParameter(defaultEngineParameter);
             jobExecution.setEngineParameter(JSONUtils.toJsonString(submitJob.getEngineParameter()));
         }
-
         jobExecution.setSubmitTime(LocalDateTime.now());
         jobExecution.setStatus(ExecutionStatus.SUBMITTED_SUCCESS);
 

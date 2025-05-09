@@ -114,6 +114,7 @@ public abstract class BaseJobConfigurationBuilder implements JobConfigurationBui
                 metricInputParameter.put(THRESHOLD, String.valueOf(parameter.getThreshold()));
                 metricInputParameter.put(EXPECTED_TYPE, StringUtils.wrapperSingleQuotes(parameter.getExpectedType()));
                 metricInputParameter.put(INVALIDATE_ITEM_CAN_OUTPUT, String.valueOf(true));
+                metricInputParameter.put(JOB_DEFINITION_ID, String.valueOf(jobExecutionInfo.getJobDefinitionId()));
                 metricInputParameter.put(ENGINE_TYPE, jobExecutionInfo.getEngineType());
                 metric2InputParameter.put(metricUniqueKey, metricInputParameter);
             }
@@ -234,6 +235,7 @@ public abstract class BaseJobConfigurationBuilder implements JobConfigurationBui
         validateResultDataStorageConfig.setPlugin(jobExecutionInfo.getValidateResultDataStorageType());
         Map<String, Object> configMap = getValidateResultSourceConfigMap(
                 ParameterUtils.convertParameterPlaceholders(sql, inputParameter),dbTable);
+        configMap.put(JOB_DEFINITION_ID, jobExecutionInfo.getJobDefinitionId());
         configMap.put(JOB_EXECUTION_ID, jobExecutionInfo.getId());
         configMap.put(INVALIDATE_ITEMS_TABLE, inputParameter.get(INVALIDATE_ITEMS_TABLE));
         configMap.put(METRIC_UNIQUE_KEY, inputParameter.get(METRIC_UNIQUE_KEY));

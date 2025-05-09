@@ -38,7 +38,7 @@ public class User implements Serializable {
     @TableField(value = "username")
     private String username;
 
-    @TableField(value = "password")
+    @TableField(value = "`password`")
     private String password;
 
     @TableField(value = "email")
@@ -47,7 +47,7 @@ public class User implements Serializable {
     @TableField(value = "phone")
     private Long phone;
 
-    @TableField(value = "admin")
+    @TableField(value = "`admin`")
     private Boolean admin;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")

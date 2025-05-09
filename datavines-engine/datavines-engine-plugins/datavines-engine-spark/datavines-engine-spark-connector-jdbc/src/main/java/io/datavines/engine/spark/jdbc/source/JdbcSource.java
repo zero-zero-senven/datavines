@@ -18,9 +18,10 @@ package io.datavines.engine.spark.jdbc.source;
 
 import io.datavines.common.utils.StringUtils;
 import io.datavines.engine.common.utils.ParserUtils;
-import org.apache.spark.sql.DataFrameReader;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
+import org.apache.hadoop.fs.shell.Count;
+import org.apache.spark.SparkContext;
+import org.apache.spark.rdd.RDD;
+import org.apache.spark.sql.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,9 +32,10 @@ import io.datavines.common.utils.TypesafeConfigUtils;
 import io.datavines.engine.api.env.RuntimeEnvironment;
 import io.datavines.engine.spark.api.SparkRuntimeEnvironment;
 import io.datavines.engine.spark.api.batch.SparkBatchSource;
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.execution.QueryExecution;
 
 import static io.datavines.common.ConfigConstants.*;
+import static org.apache.spark.sql.functions.count;
 
 public class JdbcSource implements SparkBatchSource {
 

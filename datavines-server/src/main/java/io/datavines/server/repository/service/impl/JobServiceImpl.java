@@ -514,7 +514,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
         Map<String, String> inputParameter = new HashMap<>();
         JobExecutionParameter jobExecutionParameter = JSONUtils.parseObject(jobExecution.getParameter(), JobExecutionParameter.class);
         JobExecutionInfo jobExecutionInfo = new JobExecutionInfo(
-                jobExecution.getId(), jobExecution.getName(),
+                jobExecution.getId(), jobExecution.getJobId(), jobExecution.getName(),
                 jobExecution.getEngineType(), jobExecution.getEngineParameter(),
                 jobExecution.getErrorDataStorageType(), jobExecution.getErrorDataStorageParameter(), jobExecution.getErrorDataFileName(),
                 getDefaultConnectionInfo().getType(), JSONUtils.toJsonString(DefaultDataSourceInfoUtils.getDefaultDataSourceConfigMap()),
@@ -565,12 +565,6 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
                 Map<String,String> errorDataStorageParameterMap = new HashMap<>();
                 errorDataStorageParameterMap.put(ERROR_DATA_OUTPUT_TO_DATASOURCE_DATABASE, job.getErrorDataOutputToDataSourceDatabase());
                 errorDataStorageParameter  = JSONUtils.toJsonString(errorDataStorageParameterMap);
-            }
-        } else {
-            ErrorDataStorage errorDataStorage = errorDataStorageService.getById(job.getErrorDataStorageId());
-            if (errorDataStorage != null) {
-                errorDataStorageType = errorDataStorage.getType();
-                errorDataStorageParameter  = errorDataStorage.getParam();
             }
         }
 

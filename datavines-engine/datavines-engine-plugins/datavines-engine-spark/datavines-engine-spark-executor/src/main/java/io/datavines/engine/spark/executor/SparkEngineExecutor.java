@@ -99,30 +99,43 @@ public class SparkEngineExecutor extends AbstractYarnEngineExecutor {
 
         String basePath = System.getProperty("user.dir").replace(File.separator + "bin", File.separator + "libs");
         sparkParameters.setMainJar(basePath + File.separator + configurations.getString("data.quality.jar.name"));
+        jobExecutionRequest.setExecuteFilePath(basePath + "/exec/" + jobExecutionRequest.getJobExecutionName());
 
         String pluginDir = basePath.endsWith("libs") ?
                 basePath.replace("libs","plugins"):
                 basePath + File.separator + "plugins";
 
         logger.info("spark engine plugin dir : {}", pluginDir);
-
         if (FileUtils.isExist(pluginDir)) {
-            List<String> filePathList = FileUtils.getFileList(pluginDir);
-            if (CollectionUtils.isNotEmpty(filePathList)) {
-                String jars = sparkParameters.getJars();
-                if (StringUtils.isEmpty(jars)) {
-                    jars = " --jars " + String.join(",", filePathList);
+            String jars = sparkParameters.getJars();
+            String pluginsJars = " $(echo " + pluginDir + "/*.jar  | tr ' ' ',')";
+            if (StringUtils.isEmpty(jars)) {
+                jars =  " --jars" + pluginsJars;
+            } else {
+                if(jars.trim().contains("--jars")) {
+                    jars += pluginsJars;
                 } else {
-                    if(jars.trim().contains("--jars")) {
-                        jars += " " + String.join(",", filePathList);
-                    } else {
-                        filePathList.add(jars);
-                        jars = " --jars " + String.join(",", filePathList);
-                    }
+                    jars = " --jars "  + jars + pluginsJars;
                 }
-
-                sparkParameters.setJars(jars);
             }
+            sparkParameters.setJars(jars);
+
+//            List<String> filePathList = FileUtils.getFileList(pluginDir);
+//            if (CollectionUtils.isNotEmpty(filePathList)) {
+//                String jars = sparkParameters.getJars();
+//                if (StringUtils.isEmpty(jars)) {
+//                    jars = " --jars " + String.join(",", filePathList);
+//                } else {
+//                    if(jars.trim().contains("--jars")) {
+//                        jars += " " + String.join(",", filePathList);
+//                    } else {
+//                        filePathList.add(jars);
+//                        jars = " --jars " + String.join(",", filePathList);
+//                    }
+//                }
+//
+//                sparkParameters.setJars(jars);
+//            }
         }
 
         DataVinesJobConfig configuration =

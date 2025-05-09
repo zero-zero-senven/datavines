@@ -39,6 +39,7 @@
         <module>datavines-engine-spark-config</module>
         <module>datavines-engine-spark-connector-file</module>
         <module>datavines-engine-spark-connector-mongodb</module>
+        <module>datavines-engine-spark-connector-hdfs</module>
     </modules>
 
     <properties>

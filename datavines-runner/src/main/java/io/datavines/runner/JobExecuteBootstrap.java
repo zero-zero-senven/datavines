@@ -26,19 +26,22 @@ import io.datavines.common.utils.*;
 import io.datavines.engine.config.DataVinesConfigurationManager;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 public class JobExecuteBootstrap {
 
     public static void main(String[] args) {
-        if (args.length != 1) {
+        if (args.length < 1) {
             log.info("parameter path is null, please check");
             System.exit(1);
         }
 
-        String parameterJson = FileUtils.readFile(args[0]);
+        //FileUtils.readFile(args[0]);
+        String parameterJson = new String(Base64.getDecoder().decode(args[0]));
         //进行参数解析和构造
         if (StringUtils.isEmpty(parameterJson)) {
             log.info("parameter is null, please check");
@@ -50,10 +53,18 @@ public class JobExecuteBootstrap {
             log.info("parameter parse to submit job error");
             System.exit(1);
         }
+        //外部id
+        long id;
+        if(args.length > 1){
+            id = Long.parseLong(args[1]);
+        }else if(Objects.nonNull(submitJob.getId())){
+            id = submitJob.getId();
+        }else {
+            id = System.currentTimeMillis();
+        }
 
-        long id = System.currentTimeMillis();
         JobExecutionInfo jobExecutionInfo = new JobExecutionInfo(
-                id, submitJob.getName(),
+                id, submitJob.getJobDefinitionId(), submitJob.getName(),
                 submitJob.getEngineType(), JSONUtils.toJsonString(submitJob.getEngineParameter()),
                 submitJob.getErrorDataStorageType(), JSONUtils.toJsonString(submitJob.getErrorDataStorageParameter()), submitJob.getName() + "_" + id,
                 submitJob.getValidateResultDataStorageType(), JSONUtils.toJsonString(submitJob.getValidateResultDataStorageParameter()),
@@ -67,6 +78,7 @@ public class JobExecuteBootstrap {
         JobExecutionRequest jobExecutionRequest = new JobExecutionRequest();
         jobExecutionRequest.setJobExecutionName(submitJob.getName());
         jobExecutionRequest.setJobExecutionId(id);
+//        jobExecutionRequest.setJobExecutionUniqueId(String.valueOf(id));
         jobExecutionRequest.setJobExecutionUniqueId(submitJob.getName() + "_" + id);
         jobExecutionRequest.setApplicationParameter(JSONUtils.toJsonString(qualityConfig));
         jobExecutionRequest.setEngineType(submitJob.getEngineType());
@@ -77,6 +89,8 @@ public class JobExecuteBootstrap {
         jobExecutionRequest.setValidateResultDataStorageParameter(JSONUtils.toJsonString(submitJob.getValidateResultDataStorageParameter()));
         jobExecutionRequest.setNotificationParameters(JSONUtils.toJsonString(submitJob.getNotificationParameters()));
         jobExecutionRequest.setEn(submitJob.isLanguageEn());
+        jobExecutionRequest.setTenantCode(submitJob.getTenantCode());
+        jobExecutionRequest.setEnv(submitJob.getEnv());
         Configurations configurations = new Configurations(CommonPropertyUtils.getProperties());
         JobRunner jobRunner = new JobRunner(jobExecutionRequest, configurations);
         jobRunner.run();

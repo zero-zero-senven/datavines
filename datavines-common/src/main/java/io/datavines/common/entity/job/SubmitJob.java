@@ -33,6 +33,10 @@ public class SubmitJob {
     @NotBlank(message = "task name cannot be empty")
     private String name;
 
+    private Long id;
+
+    private Long jobDefinitionId;
+
     private String executePlatformType = "client";
 
     private Map<String,Object> executePlatformParameter;

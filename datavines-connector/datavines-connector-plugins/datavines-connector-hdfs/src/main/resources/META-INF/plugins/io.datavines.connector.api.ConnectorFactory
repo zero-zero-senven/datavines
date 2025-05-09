@@ -1,0 +1,1 @@
+hdfs=io.datavines.connector.plugin.HdfsConnectorFactory

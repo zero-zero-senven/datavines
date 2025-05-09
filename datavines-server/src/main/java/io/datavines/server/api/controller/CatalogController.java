@@ -40,6 +40,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Base64;
 import java.util.Date;
 
 @Api(value = "catalog", tags = "catalog", produces = MediaType.APPLICATION_JSON_VALUE)
