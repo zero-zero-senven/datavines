@@ -72,6 +72,11 @@ public class HdfsConfigBuilder implements ConfigBuilder {
         return result;
     }
 
+    @Override
+    public String buildErrorDataStorage(boolean isEn) {
+        return "";
+    }
+
     protected InputParam getHostInput(boolean isEn) {
         return getInputParam("host",
                 isEn ? "host":"地址",
