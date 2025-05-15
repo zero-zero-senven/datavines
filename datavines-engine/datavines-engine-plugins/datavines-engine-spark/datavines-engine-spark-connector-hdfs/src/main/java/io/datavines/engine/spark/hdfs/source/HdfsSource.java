@@ -84,10 +84,12 @@ public class HdfsSource implements SparkBatchSource {
     @Override
     public Dataset<Row> getData(SparkRuntimeEnvironment env) {
         SparkSession sparkSession = env.sparkSession();
+        sparkSession.conf().set("spark.sql.session.timeZone", "UTC");
         String hdfsFile = config.getString(HDFS_FILE);
         if(StringUtils.isEmpty(hdfsFile)){
             throw new DataVinesException("hdfs file not found, please set hdfs_file.");
         }
+
         logger.info("hdfs file : " + hdfsFile);
         logger.info("source config : " + config.entrySet().stream().map(i -> i.getKey() + ":" + i.getValue()).collect(Collectors.joining(";")));
         return sparkSession
