@@ -1,0 +1,96 @@
+{
+  "name": "task-quality-001_1706691458215",
+  "env": {
+    "engine": "local",
+    "type": "batch"
+  },
+  "sources": [
+    {
+      "plugin": "jdbc",
+      "type": "source",
+      "config": {
+        "src_connector_type": "mysql",
+        "password": "Szlx123$",
+        "database": "TPCC",
+        "driver": "com.mysql.cj.jdbc.Driver",
+        "user": "root",
+        "output_table": "customer",
+        "table": "`TPCC`.`customer`",
+        "url": "jdbc:mysql://192.168.1.201:3307/TPCC?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&useInformationSchema=true"
+      }
+    }
+  ],
+  "transforms": [
+    {
+      "plugin": "sql",
+      "type": "invalidate_items",
+      "config": {
+        "invalidate_items_table": "invalidate_items_5679c101",
+        "index": 0,
+        "output_table": "invalidate_items_5679c101",
+        "sql": "select * from `TPCC`.`customer` where (`c_id` is null or `c_id` = '')"
+      }
+    },
+    {
+      "plugin": "sql",
+      "type": "actual_value",
+      "config": {
+        "invalidate_items_table": "invalidate_items_5679c101",
+        "index": 0,
+        "output_table": "invalidate_count_5679c101",
+        "sql": "select count(1) as actual_value_5679c101 from invalidate_items_5679c101"
+      }
+    }
+  ],
+  "sinks": [
+    {
+      "plugin": "mysql",
+      "type": "validate_result",
+      "config": {
+        "url": "jdbc:mysql://192.168.1.201:3307/datavines?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8",
+        "sql": "INSERT INTO dv_job_execution_result (`job_execution_id`, `metric_unique_key`, `metric_type`, `metric_name`, `metric_dimension`, `database_name`, `table_name`, `column_name`, `actual_value`, `expected_value`, `expected_type`, `result_formula`, `operator`, `threshold`, `create_time`, `update_time`) VALUES (null, '5679c101', 'single_table', 'column_blank', 'completeness', 'TPCC', 'customer', 'c_id', ${actual_value_5679c101}, ${expected_value_5679c101}, 'none', 'count', 'eq', 0.0, '2024-01-31 16:57:38', '2024-01-31 16:57:38') ON DUPLICATE KEY UPDATE actual_value = '${actual_value_5679c101}',update_time='2024-01-31 16:57:38'",
+        "src_connector_type": "mysql",
+        "invalidate_items_table": "invalidate_items_5679c101",
+        "password": "Szlx123$",
+        "driver": "com.mysql.cj.jdbc.Driver",
+        "metric_unique_key": "5679c101",
+        "expected_value": "expected_value_5679c101",
+        "user": "root",
+        "output_table": "dv_job_execution_result",
+        "table": "dv_job_execution_result"
+      }
+    },
+    {
+      "plugin": "mysql",
+      "type": "actual_value",
+      "config": {
+        "url": "jdbc:mysql://192.168.1.201:3307/datavines?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8",
+        "sql": "INSERT INTO dv_actual_values (job_execution_id, metric_name, unique_code, actual_value, data_time, create_time, update_time) VALUES (null, 'column_blank', 'DNV4NRS6S1TDTV6XSBGAQ/EBYLSR2/UG4LNUNG/YWGS=', ${actual_value_5679c101}, '2024-01-31 16:57:38', '2024-01-31 16:57:38', '2024-01-31 16:57:38')",
+        "src_connector_type": "mysql",
+        "invalidate_items_table": "invalidate_items_5679c101",
+        "password": "******",
+        "driver": "com.mysql.cj.jdbc.Driver",
+        "metric_unique_key": "5679c101",
+        "expected_value": "expected_value_5679c101",
+        "user": "root",
+        "output_table": "dv_actual_values",
+        "table": "dv_actual_values"
+      }
+    },
+    {
+      "plugin": "jdbc",
+      "type": "error_data",
+      "config": {
+        "error_data_file_name": "column_blank_c_id_1706691458215",
+        "error_data_dir": "/tmp/datavines/error-data",
+        "invalidate_items_table": "invalidate_items_5679c101",
+        "src_connector_type": "mysql",
+        "metric_name": "'column_blank'",
+        "driver": "com.mysql.cj.jdbc.Driver",
+        "invalidate_item_can_output": "true",
+        "job_execution_id": "null",
+        "error_data_output_to_datasource_database": "test"
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "test-save",
+  "executePlatformType": "client",
+  "executePlatformParameter": {},
+  "engineType": "local",
+  "engineParameter": {},
+  "parameter": {
+    "connectorParameter": {
+      "type": "mysql",
+      "parameters": {
+        "password": "root123456",
+        "port": "3306",
+        "host": "127.0.0.1",
+        "user": "root",
+        "properties": "useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&useInformationSchema=true"
+      }
+    },
+    "metricParameterList": [
+      {
+        "metricType": "column_blank",
+        "metricParameter": {
+          "database": "datavines",
+          "table": "dv_job",
+          "column": "datasource_id_2"
+        },
+        "expectedType": "monthly_avg",
+        "resultFormula": "count",
+        "operator": "eq",
+        "threshold": 0
+      }
+    ]
+  },
+  "errorDataStorageType": "mysql",
+  "errorDataStorageParameter": {
+    "error_data_output_to_datasource_database": "test"
+  },
+  "validateResultDataStorageType": "mysql",
+  "validateResultDataStorageParameter": {
+    "src_connector_type": "mysql",
+    "password": "Szlx123$",
+    "driver": "com.mysql.cj.jdbc.Driver",
+    "user": "root",
+    "url": "jdbc:mysql://192.168.1.201:3307/datavines?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai"
+  },
+  "retryTimes": 0,
+  "retryInterval": 1000,
+  "timeout": 3600,
+  "timeoutStrategy": "WARN",
+  "env": "",
+  "languageEn": false
+}

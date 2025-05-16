@@ -428,7 +428,7 @@ public class OSUtils {
     if (loadAverage > maxCpuLoadAvg || availablePhysicalMemorySize < reservedMemory) {
       logger.warn("current cpu load average {} is too high or available memory {}G is too low, under max.cpu.load.avg={} and reserved.memory={}G",
               loadAverage, availablePhysicalMemorySize, maxCpuLoadAvg, reservedMemory);
-      return false;
+      return true;
     } else {
       return true;
     }

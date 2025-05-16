@@ -25,10 +25,12 @@ if [ $# -le 0 ]; then
 fi
 
 filePath=$1
+id=$2
 
 echo "Begin Execute......"
 
 BIN_DIR=`dirname $0`
+echo $BIN_DIR
 BIN_DIR=`cd "$BIN_DIR"; pwd`
 DATAVINES_HOME=$BIN_DIR/..
 
@@ -41,7 +43,7 @@ export DATAVINES_OPTS="-server -Xmx16g -Xms1g -XX:+UseG1GC -XX:G1HeapRegionSize=
 cd $DATAVINES_HOME
 
 if [ $filePath ]; then
-  $JAVA_HOME/bin/java $DATAVINES_OPTS -Djava.ext.dirs=$JAVA_HOME/jre/lib/ext:$DATAVINES_LIB_JARS -classpath $DATAVINES_LIB_JARS io.datavines.runner.JobExecuteBootstrap $filePath
+  $JAVA_HOME/bin/java $DATAVINES_OPTS -Djava.ext.dirs=$JAVA_HOME/jre/lib/ext:$DATAVINES_LIB_JARS -Ddata.quality.jar.name=libs/datavines-engine-spark-core-1.0.0-SNAPSHOT.jar -classpath $DATAVINES_LIB_JARS io.datavines.runner.JobExecuteBootstrap $filePath $id
 else
   echo "Error: No filePath was found."
   exit 1

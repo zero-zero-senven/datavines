@@ -1,0 +1,64 @@
+{
+  "languageEn":true,
+  "name":"test",
+  "executePlatformType":"client",
+  "parameter":{
+    "connectorParameter":{
+      "type":"mysql",
+      "parameters":{
+        "database":"datavines",
+        "password":"Szlx123$",
+        "port":"3307",
+        "host":"192.168.1.201",
+        "user":"root",
+        "properties":"useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai"
+      }
+    },
+    "metricParameterList":[
+      {
+        "metricType":"column_duplicate",
+        "metricParameter":{
+          "table":"dv_actual_values",
+          "column":"id",
+          "database":"datavines"
+        },
+
+        "expectedType":"fix_value",
+        "expectedParameter":{
+          "expected_value":"10"
+        },
+        "operator":"lt",
+        "threshold":5.0
+      }
+    ]
+  },
+  "errorDataStorageType": "file",
+  "errorDataStorageParameter": {
+    "data_dir":"/tmp/datavines/error-data",
+    "column_separator":","
+  },
+  "validateResultDataStorageType": "file",
+  "validateResultDataStorageParameter":{
+    "data_dir":"/tmp/datavines/validate-result-data",
+    "column_separator":","
+  },
+  "notificationParameters": [
+    {
+      "type":"email",
+      "config": {
+        "serverHost":"smtp.qq.com",
+        "serverPort":"25",
+        "sender":"1234567@qq.com",
+        "enableSmtpAuth":"true",
+        "user":"123456@qq.com",
+        "passwd":"123456",
+        "starttlsEnable":"false",
+        "sslEnable":"false",
+        "smtpSslTrust":"true"
+      },
+      "receiver": {
+        "to":"12345566@qq.com"
+      }
+    }
+  ]
+}

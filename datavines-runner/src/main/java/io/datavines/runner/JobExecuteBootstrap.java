@@ -43,6 +43,7 @@ public class JobExecuteBootstrap {
 
         //FileUtils.readFile(args[0]);
         String parameterJson = new String(Base64.getDecoder().decode(args[0]));
+//        String parameterJson = new String(args[0]);
         //进行参数解析和构造
         if (StringUtils.isEmpty(parameterJson)) {
             log.info("parameter is null, please check");
