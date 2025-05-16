@@ -83,12 +83,16 @@ public class HdfsSource implements SparkBatchSource {
 
     @Override
     public Dataset<Row> getData(SparkRuntimeEnvironment env) {
+        String timeZoneKey = "spark.sql.session.timeZone";
         SparkSession sparkSession = env.sparkSession();
-        sparkSession.conf().set("spark.sql.session.timeZone", "UTC");
+        sparkSession.conf().set(timeZoneKey, "UTC");
         String hdfsFile = config.getString(HDFS_FILE);
         if(StringUtils.isEmpty(hdfsFile)){
             throw new DataVinesException("hdfs file not found, please set hdfs_file.");
         }
+        logger.info("spark session timeZone : " + sparkSession.conf().get(timeZoneKey));
+
+        sparkSession.sql("set spark.sql.session.timeZone=UTC ");
 
         logger.info("hdfs file : " + hdfsFile);
         logger.info("source config : " + config.entrySet().stream().map(i -> i.getKey() + ":" + i.getValue()).collect(Collectors.joining(";")));

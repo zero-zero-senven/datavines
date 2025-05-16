@@ -24,6 +24,7 @@ import io.datavines.common.entity.job.SubmitJob;
 import io.datavines.common.enums.JobType;
 import io.datavines.common.utils.*;
 import io.datavines.engine.config.DataVinesConfigurationManager;
+import io.datavines.runner.utils.CustomPrepareUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Base64;
@@ -47,6 +48,9 @@ public class JobExecuteBootstrap {
             log.info("parameter is null, please check");
             System.exit(1);
         }
+
+        // 填充日期变量
+        parameterJson = CustomPrepareUtil.restorePlaceholders(parameterJson, args);
 
         SubmitJob submitJob = JSONUtils.parseObject(parameterJson, SubmitJob.class);
         if (submitJob == null) {
