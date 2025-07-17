@@ -32,6 +32,7 @@ import io.datavines.connector.api.entity.ResultList;
 import io.datavines.engine.local.api.utils.LoggerFactory;
 import io.datavines.connector.plugin.utils.SqlUtils;
 import io.datavines.spi.PluginLoader;
+import org.apache.commons.lang.BooleanUtils;
 import org.slf4j.Logger;
 
 import java.math.BigDecimal;
@@ -199,7 +200,7 @@ public class ErrorDataSinkExecutor extends BaseDataSinkExecutor {
                                     break;
                                 case BYTE_TYPE:
                                     if (StringUtils.isNotEmpty(rowContent)) {
-                                        errorDataPreparedStatement.setByte(j+1, Byte.parseByte(rowContent));
+                                        errorDataPreparedStatement.setByte(j+1, Byte.parseByte("true".equals(rowContent) ? "1" : "false".equals(rowContent) ? "0" : rowContent));
                                     } else {
                                         errorDataPreparedStatement.setNull(j+1, Types.TINYINT);
                                     }
