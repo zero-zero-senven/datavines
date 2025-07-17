@@ -32,7 +32,6 @@ import io.datavines.connector.api.entity.ResultList;
 import io.datavines.engine.local.api.utils.LoggerFactory;
 import io.datavines.connector.plugin.utils.SqlUtils;
 import io.datavines.spi.PluginLoader;
-import org.apache.commons.lang.BooleanUtils;
 import org.slf4j.Logger;
 
 import java.math.BigDecimal;
